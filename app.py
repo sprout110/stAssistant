@@ -102,8 +102,6 @@ def addStockId(stockId, groupId):
       groupFile = stockGroup.GetGroupFile(groupId)
       df = pd.read_csv(groupFile, converters={'stockId': str}, header=0)
 
-      print(df)
-
       stock = {
          "stockId":[stockId], 
          "mark":["O"]
@@ -111,7 +109,9 @@ def addStockId(stockId, groupId):
       
       df2 = pd.DataFrame(stock)
       df3 = pd.concat([df, df2], ignore_index=True)
+      print(df3)
       df3 = df3.drop_duplicates()
+      print(df3)
       df3.set_index('stockId', inplace=True)
       df3 = df3.sort_index()
       
@@ -126,16 +126,15 @@ def deleteStockId(stockId, groupId):
       stockGroup = StockGroupModel()
       groupFile = stockGroup.GetGroupFile(groupId)
 
-      print(groupFile)
       df = pd.read_csv(groupFile, converters={'stockId': str}, header=0)
       if not df[df['stockId'] == stockId].empty:
          df = df.drop(df[df['stockId'] == stockId].index)
-         print('1')
+      
       df = df.drop_duplicates()
-      print('2')
+      
       df.set_index('stockId', inplace=True)
       df = df.sort_index()
-      print(df)
+      
       df.to_csv(groupFile,encoding='utf-8-sig')
       return True
    except:
