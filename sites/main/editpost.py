@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired
 from flask_ckeditor import CKEditor,CKEditorField
 import datetime
 import pandas as pd
+import os
 
 class PostForm(FlaskForm):
     title = StringField('Title')
@@ -16,7 +17,13 @@ def EditPost(postDate='2023-09-30'):
     isThere = False
     form = PostForm()
 
-    df1 = pd.read_csv('./myget.csv')
+    if os.path.isfile('myget.csv'):
+        df1 = pd.read_csv(r'myget.csv',  header=0)
+    else:
+        df1 = pd.DataFrame(columns=['Date','Title','Get'])
+
+    print(df1)
+
     for index, row in df1.iterrows():  
         if str(row['Date']) == str(postDate):
             updateIndex = index
@@ -44,6 +51,7 @@ def EditPost(postDate='2023-09-30'):
             return render_template('main/post.html', title=title, body=body)
     else:
 
+        print('hi')
         for index, row in df1.iterrows():  
             if str(row['Date']) == str(postDate):
                 form.title.data = df1.loc[index,'Title']

@@ -228,13 +228,18 @@ def posts():
 
 def postList():
     
+    posts = ''
+
     try:
-        df = pd.read_csv(r'myget.csv',  header=0, index_col=0)
-        
+        if os.path.isfile('myget.csv'):
+            df = pd.read_csv(r'myget.csv',  header=0, index_col=0)
+        else:
+            df = pd.DataFrame(columns=['Date','Title','Get'])
+            posts = '尚無資料！'       
     except:
         print('謮取myget.csv失敗')
 
-    posts = ''
+    
     
     for i in range(len(df)-1,-1,-1):
         
