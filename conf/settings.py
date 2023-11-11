@@ -9,9 +9,9 @@ stockClass = ''
 
 tzone = datetime.timezone(datetime.timedelta(hours=8))
 stocklistfile = 'stocklist20230403.csv'
-stockdividendfile = 'stockdividend20230420.csv'
+# stockdividendfile = 'stockdividend20230420.csv'
 
-stocklistfile = 'stocklist20230403.csv'
-stockdividendfile = 'stockdividend20230420.csv'
+# stocklistfile = 'stocklist20230403.csv'
+# stockdividendfile = 'stockdividend20230420.csv'
 
 
