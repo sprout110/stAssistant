@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 	<meta charset="UTF-8">
+ 	<title>基本分析</title>
+</head>
+<body>
+	<div class="warpper" style="width: 90%; margin: auto">
+		<h1>{{stock.stockId}}-{{stock.stockName}}</h1>
+		<hr>
+
+		<ul>
+			<li>所在池：{{groupId}}</li>
+		</ul>
+
+		<hr>
+		<a href="{{ url_for('stockgroup') }}">Stock Group</a>
+		
+	</div>
+</body>
+</html>
+

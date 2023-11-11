@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>{{appName}}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <!-- Sidebar CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='sidebars/sidebars.css') }}">
+    <!-- This site CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+</head>
+<body>
+
+  <!-- 展往/縮起來 按鈕 -->
+  <nav class="navbar navbar-expand-lg
+    navbar-light
+    bg-myyellow
+    border-bottom
+    box-shadow
+     pt-2" style="background-color:lightblue">
+
+      <a class="navbar-brand text-myorange" href="/stockgroup">
+        <div class="mb-0" style="padding-left: 10px;">
+          小幫手
+        </div>
+      </a>
+
+      
+      <button id="collapse" class="btn"  style="color: rgba(0,0,0,.55);border-color: rgba(0,0,0,.1);position: absolute;right: 10px;">
+        <span class="navbar-toggler-icon" style="display: inline-block;width: 1.5em;height: 1.5em;background-size: 100%;vertical-align: middle;background-position: center;"></span>
+      </button>
+    
+  </nav>
+
+  <main>
+
+    {% block content %} {% endblock %}
+
+  </main>
+
+
+
+  <script src="{{ url_for('static', filename='jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='sidebars/sidebars.js') }}"></script>
+</body>
+</html>

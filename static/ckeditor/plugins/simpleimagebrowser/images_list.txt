@@ -1,0 +1,10 @@
+﻿[
+    {
+        "EmoticonId": "c5d3ed84-150a-4842-afec-3f4b86cf7cb4",
+        "EmoticonPath": "em50.png",
+		"IconClass": "表情圖示1",
+        "Keyword": "不客氣",
+	    "OrderIndex": 0,
+	    "Used": false
+    }
+]

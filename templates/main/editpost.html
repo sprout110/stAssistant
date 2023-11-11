@@ -1,0 +1,19 @@
+{% extends 'main/share.html' %}
+
+{% block content %}
+  
+      <div id="rightcontent"  style="width:100%;padding: 20px;">
+            
+            <form method="post" style="padding: 20px;">
+              {{ form.csrf_token }}
+              標題：{{ form.title }}
+              <br><br>
+              {{ form.body }}
+              <br>
+              {{ form.submit }}
+            </form>
+            {{ ckeditor.load(custom_url=url_for('static', filename='ckeditor/ckeditor.js')) }}
+
+      </div>
+
+{% endblock %}

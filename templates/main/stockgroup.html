@@ -1,0 +1,224 @@
+{% extends 'main/share.html' %}
+
+{% block content %}
+<div id="sidebar" class="flex-shrink-0 p-3 bg-white">
+
+  <ul class="list-unstyled ps-0">
+
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#tools-collapse" aria-expanded="false">
+        工具
+      </button>
+      <div class="collapse" id="tools-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li>
+            <a href="javascript: showPost('/postlist')" class="link-dark rounded">觀察心得</a>
+          </li>
+          <li>
+            <a href="addpost" class="link-dark rounded" target="_child">新增記錄</a>
+          </li>
+          <li>
+            <a href="updatestock" class="link-dark rounded" target="_child">更新單一歷史</a>
+          </li>
+          <li>
+            <a href="javascript: void(0)" class="link-dark rounded" onclick="checkonlinedata()">檢查線上資料</a>
+          </li>
+          <li>
+            <a href="updateallstocks" class="link-dark rounded" target="_child">更新全部歷史</a>
+          </li>
+          <li>
+            <a href="clearpng" class="link-dark rounded" target="_child">清除png檔</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    {% if groups %}
+    {% for group in groups %}
+    {% if group['groupId'] != 'none' %}
+    <li class="mb-1">
+      <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#{{group['groupId']}}-collapse" aria-expanded="false">
+        {{group['groupName']}}
+      </button>
+      <div class="collapse" id="{{group['groupId']}}-collapse">
+        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+          <li>
+            <a href="javascript: void(0)" class="link-dark rounded" onclick="checkonlinedata()">檢查線上資料</a>
+          </li>
+          <li>
+            <a href="javascript: updateGroup('{{group.groupId}}')" class="link-dark rounded">更新歷史</a>
+          </li>
+          <li>
+            <a href="notifygroup?groupId={{group.groupId}}" class="link-dark rounded" target="_child">notify</a>
+          </li>
+          {% if 'my' in group['groupId'] %}
+          <li>
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" 
+              data-bs-target="#mystockitem{{loop.index}}-collapse" 
+              aria-expanded="false" 
+              onclick=""
+              style="font-size: small;padding-left: .9rem;">
+              [0]^TWII-加權指數[O]
+            </button>
+            <div class="collapse" id="mystockitem{{loop.index}}-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="mb-1 nav-item">
+                  <a data-bs-toggle="dropdown" href="javascript: void(0)" onclick="">
+                    ^TWII-加權指數 各年k線圖
+                  </a> 
+                  <ul class="dropdown-menu">
+                    {% for i in range(2022, 2010, -1) %}
+                    <li>
+                      <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandleV30(&quot;^TWII&quot;, '{{i}}-01-01','{{i+1}}-01-01')">{{i}}</a>
+                    </li>
+                    {% endfor %}                                
+                  </ul>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="updateStock(&quot;^TWII&quot;)">更新數據</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 0.4)">最近 4月</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 0.8)">最近 8月</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 1)">最近  1年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 2)">最近  2年</a>
+                </li>                    
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 4)">最近  4年</a>
+                </li>        
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 10)">最近 10年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 20)">最近 20年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showHistory(&quot;^TWII&quot;)">歷史數據</a>
+                </li>
+                <li>
+                  <a href="https://tw.stock.yahoo.com/quote/^TWII" class="link-dark rounded" target="child">
+                    Yahoo
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </li>
+          {% endif %}
+
+          {% for stock in groupStocks[group['groupId']] %}
+          <li>
+            <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" 
+              data-bs-target="#{{group['groupId']}}{{loop.index}}-collapse" 
+              aria-expanded="false" 
+              onclick=""
+              style="font-size: small;padding-left: .9rem;">
+              [{{loop.index}}]{{stock['stockId']}}-{{stock['stockName']}}[{{stock['mark']}}]
+            </button>
+            <div class="collapse" id="{{group['groupId']}}{{loop.index}}-collapse">
+              <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li class="mb-1 nav-item">
+                  <a data-bs-toggle="dropdown" href="javascript: void(0)" onclick="">
+                    {{stock['stockId']}}-{{stock['stockName']}} 各年k線圖
+                  </a> 
+                  <ul class="dropdown-menu">
+                    {% for i in range(2022, 2010, -1) %}
+                    <li>
+                      <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandleV30(&quot;{{stock['stockId']}}&quot;, '{{i}}-01-01','{{i+1}}-01-01')">{{i}}</a>
+                    </li>
+                    {% endfor %}                                
+                  </ul>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="updateStock(&quot;{{stock['stockId']}}&quot;)">更新數據</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 0.4)">最近 4月</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 0.8)">最近 8月</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 1)">最近  1年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 2)">最近  2年</a>
+                </li>                    
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 4)">最近  4年</a>
+                </li>        
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 10)">最近 10年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;{{stock['stockId']}}&quot;, 20)">最近 20年</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showDescript(&quot;{{stock['stockId']}}&quot;)">基本資訊</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showHistory(&quot;{{stock['stockId']}}&quot;)">歷史數據</a>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showDividend(&quot;{{stock['stockId']}}&quot;)">除權息資訊</a>
+                </li>
+                <li>
+                  <a href="https://tw.stock.yahoo.com/quote/{{stock['stockId']}}" class="link-dark rounded" target="child">
+                    Yahoo
+                  </a>
+                </li>
+                {% if group['groupId'] in ['up', 'arrange', 'down', 'candidate'] %}
+                <li>
+                  <a href="editbase?stockId={{stock['stockId']}}&groupId={{group['groupId']}}" class="link-dark rounded">移至。。</a>
+                </li>
+                {% endif %}
+                {% if 'my' in group['groupId'] %}
+                <li>
+                  <a href="editmycare?stockId={{stock['stockId']}}&groupId={{group['groupId']}}" class="link-dark rounded">移至。。</a>
+                </li>
+                {% endif %}
+
+              </ul>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+  </ul>
+
+</div>
+
+<div id="rightcontent" class="active">
+    <div id="content">
+      <div id="stockcontent" class="mystock" style="width:100%; padding-top: 20px;">
+        歡迎來到小幫手的網站，請讓小幫手來幫你吧！
+      </div>
+      <ul class="quoteList">
+      </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+  laDataModel ={
+      {% for group in groups %}
+      '{{group.groupId}}':[{% for stock in groupStocks[group.groupId] %}'{{stock.stockId}}',{% endfor %}],
+      {% endfor %}
+  }
+
+</script>
+<script src="{{ url_for('static', filename='stockgroup.js') }}"></script>
+
+{% endblock %}
+

@@ -1,0 +1,17 @@
+Flask==2.0.2
+pandas
+matplotlib
+mplfinance
+pandas
+numpy
+yfinance
+FinMind
+flask_cors
+pymongo
+cachetools
+gunicorn
+apscheduler
+flask-ckeditor
+wtforms
+wtf
+Flask-WTF

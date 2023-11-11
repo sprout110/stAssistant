@@ -1,0 +1,73 @@
+<!doctype html>
+<head>
+    <title>{{appName}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<html>
+   <body>
+     <main>
+        <div class="px-4 py-3 my-2 text-center">
+            <!-- <img class="d-block mx-auto mb-4" src="{{ url_for('static', filename='bootstrap/bootstrap-logo.svg')}}" alt="" width="192" height="192"> -->
+            <h1 class="display-6 fw-bold">{{name}}！我愛你！</h1>
+            <p class="fs-5">
+                很高興見到你!
+            </p>
+            <table class="table">
+
+              <tr>
+                <td>
+                  名稱
+                </td>
+                <td>
+                  {{stockName}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  代號
+                </td>
+                <td>
+                    {{stockId}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  上市/上櫃
+                </td>
+                <td>
+                  {{type}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  類別
+                </td>
+                <td>
+                  {{stockClass}}
+                </td>
+              </tr>
+              <!-- <tr>
+                <td></td>
+                <td>{{ returnUrl }}</td>
+              </tr> -->
+            </table>
+            <div style="display:inline-block">
+              <div style="width: 200px;float: left;">
+                <a href="{{ returnUrl }}" class="btn btn-primary btn-lg px-4 gap-3" autofocus>回首頁</a>
+              </div>
+              <div style="float: left;">
+                {% if index>=0 %}
+                <form method="post" action="{{ fromUrl }}">
+                  <input type="hidden" id="stockId" name="stockId" value="{{stockId}}" />
+                  <input type="hidden" id="queryStockName" name="queryStockName" value="{{queryStockName}}" />
+                  <input type="hidden" id="index" name="index" value="{{index}}" />
+                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">下一筆</button>
+                </form>
+                {% endif %}
+              </div>
+            </div>
+        </div>
+     </main>      
+   </body>
+</html>

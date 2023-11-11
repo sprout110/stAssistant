@@ -1,0 +1,44 @@
+<!doctype html>
+<head>
+    <title>{{appName}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<html>
+   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-myyellow border-bottom box-shadow pt-2" style="background-color:lightblue">
+
+        <a class="navbar-brand text-myorange" href="/stockgroup">
+          <div class="mb-0" style="padding-left: 10px;">
+            小幫手
+          </div>
+        </a>
+        
+        <button id="collapse" class="btn"  style="color: rgba(0,0,0,.55);border-color: rgba(0,0,0,.1);position: absolute;right: 10px;">
+          <span class="navbar-toggler-icon" style="display: inline-block;width: 1.5em;height: 1.5em;background-size: 100%;vertical-align: middle;background-position: center;"></span>
+        </button>
+      
+    </nav>
+     <main>
+        <div class="px-4 py-3 my-2 text-center">
+            <h1 class="display-6 fw-bold text-primary">更新歷史資料</h1>            
+        </div>
+        <form method="post">
+            <div class="col-md-6 mx-auto text-center">
+                <input type="hidden" name="fromForm" value=true>
+                <label for="stockId" class="form-label fw-bold fs-5">能告訴我你想查的代號嗎？</label>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center align-items-center my-1">
+                    <input type="text" class="form-control" id="stockId" name="stockId" style="max-width: 256px;" autofocus />
+                </div>            
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center my-2">
+                  <button type="submit" class="btn btn-primary btn-lg px-4 gap-3">按一下</button>
+                </div>
+                <div class="text-start">
+                    {{msg}}
+                </div>
+            </div>
+        </form>
+        
+     </main>      
+   </body>
+</html>

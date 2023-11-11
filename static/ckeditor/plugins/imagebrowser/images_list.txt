@@ -1,0 +1,57 @@
+﻿[
+    {
+        "EmoticonId": "c5d3ed84-150a-4842-afec-3f4b86cf7cb4",
+        "thumb": "c5d3ed84-150a-4842-afec-3f4b86cf7cb4",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "cd9fdc44-7b68-4665-9bdd-6416a209e6b7",
+        "thumb": "cd9fdc44-7b68-4665-9bdd-6416a209e6b7",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "cd236ee4-a5b4-44c2-92f3-329477377e23",
+        "thumb": "cd236ee4-a5b4-44c2-92f3-329477377e23",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "ab17dd88-a22a-4d45-9c5e-c686ddf60619",
+        "thumb": "ab17dd88-a22a-4d45-9c5e-c686ddf60619",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "c5cc5750-8587-45c4-bec2-72b0f657fb07",
+        "thumb": "c5cc5750-8587-45c4-bec2-72b0f657fb07",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "ef06c561-e00b-4278-84b0-c8e1ecd99e78",
+        "thumb": "ef06c561-e00b-4278-84b0-c8e1ecd99e78",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "8b655c1c-75b2-4c68-9ff9-c84201a6fdd2",
+        "thumb": "8b655c1c-75b2-4c68-9ff9-c84201a6fdd2",
+        "IconClass": "chat4"
+    },
+    {
+        "EmoticonId": "65be72aa-b1db-4153-ad57-8d8618d0b6a8",
+        "thumb": "65be72aa-b1db-4153-ad57-8d8618d0b6a8",
+        "IconClass": "chat4"
+    },
+	{
+        "EmoticonId": "3c9ea0aa-1b65-47df-85af-4607d8c075bd",
+        "thumb": "3c9ea0aa-1b65-47df-85af-4607d8c075bd",
+        "IconClass": "chat4"
+    },
+	{
+        "EmoticonId": "3f41c567-13a1-42c1-aba9-3099f94716c3",
+        "thumb": "3f41c567-13a1-42c1-aba9-3099f94716c3",
+        "IconClass": "chat4"
+    },
+	{
+        "EmoticonId": "fe89b9b4-bfac-4261-bb7c-f4adf35988e3",
+        "thumb": "fe89b9b4-bfac-4261-bb7c-f4adf35988e3",
+        "IconClass": "chat4"
+    }
+]

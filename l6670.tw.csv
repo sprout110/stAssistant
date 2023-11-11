@@ -1,0 +1,7 @@
+﻿YYYY,@YYYY,ownerDate,cashDividendDate,price,priceBackDate,backDays,giveDate,stockDividendDate,@price,@priceBackDate,@priceBackDays,cashDividend,shareCashDividend,cashDividendTotal,stockDividend,shareStockDividend,stockDividendTotal,dividendTotal
+2023,2022全年,23'06/21,,,,,,,,,,22.0,0,22.0,0,0,0,22.0
+2022,2021全年,22'06/21,22'07/20,181.0,22'08/11,17.0,22'08/16,,,,,12.0,0,12.0,0,0,0,12.0
+2021,2020全年,21'06/24,21'08/12,202.0,22'02/09,119.0,21'08/31,,,,,6.6,0,6.6,0,0,0,6.6
+2020,2019全年,20'06/23,20'07/30,167.5,20'09/01,24.0,20'08/26,,,,,8.0,0,8.0,0,0,0,8.0
+2019,2018全年,19'06/27,19'07/15,188.0,20'01/17,129.0,19'08/06,,,,,11.0,0,11.0,0,0,0,11.0
+2018,2017全年,18'06/27,18'07/13,,18'08/02,15.0,18'08/08,,,,,9.0,0,9.0,0,0,0,9.0
