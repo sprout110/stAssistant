@@ -1,0 +1,6 @@
+groupId,type,groupName,groupFile
+none1,leaf,觀望池,none1.csv
+up,leaf,上漲池,up.csv
+arrange,leaf,整理池,arrange.csv
+down,leaf,下跌池,down.csv
+candidate,leaf,研究池,candidate.csv

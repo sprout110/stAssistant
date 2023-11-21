@@ -42,7 +42,6 @@ class PostForm(FlaskForm):
 
 root_path = ''
 
-
 def ans():
     stockId = request.form.get('stockId')
     index = int(request.form.get('index'))
@@ -73,21 +72,31 @@ def candleV3():
     endDate = request.args.get('endDate', default=None)
     return CandleV30(stockId = stockId, startDate=datetime.datetime.strptime(startDate, '%Y-%m-%d'), endDate=datetime.datetime.strptime(endDate, '%Y-%m-%d'))
 
-
 def ckEditor():
     form = PostForm()
     return render_template('main/ckeditor.html', form=form)
 
 def checkData():
+    pd.set_option('colheader_justify', 'center')
     df = CheckData()
-
-    df.columns=['開盤','最高','最低','收盤','調整','成交量']
-    if df.empty == True:
+    
+    if df.empty:
         return "檢查失敗"
+    
+    df.columns=['日期', '開盤','最高','最低','收盤','調整','成交量']
+    df.set_index('日期', inplace=True)
     return f"{df.to_html(classes='table')}"
 
 def clearpng():
-    return "開發中。。。"
+    try:
+        directory = os.listdir('./')
+        for file in directory:
+            if file.endswith(".png"):
+                os.remove(file)
+        # os.remove(file) for file in os.listdir('./') if file.endswith('.png')
+        return "OK"
+    except:
+        return "發生錯誤！"
 
 def descript():
     code = request.args.get('code', default=None)
@@ -155,20 +164,57 @@ def init_rootPath(app):
 def index():
    return render_template('main/index.html')
 
-def mytest(mykey):
-   return mykey
-
-def movegroupbase():
-    groupId = request.args.get('groupId', default=None)
+def movegroupa(stocks, moveGroup):
+    html = ''
+    try:
+        for stock in stocks:
+            if stock['toGroupId'] != stock['fromGroupId']:
+                text = f"{stock['stockId']} 移至 {stock['toGroupId']}"
+                html += text + '<br />'
+                moveGroup.Move(stock['stockId'], stock['fromGroupId'], stock['toGroupId'])
+            else:
+                text = f"{stock['stockId']} 不移動！" 
+                html += text + '<br />'
+        return html
+    except:
+        return f'Server Error: {html}'
+    
+def movegroupbase():  
     moveGroup = MoveGroup()
-    return moveGroup.Base(groupId)
-
+    if request.method == 'GET':
+        groupId = request.args.get('groupId', default=None)
+        return moveGroup.Base(groupId)
+    else:
+        stocks = []
+        for stockId in request.values:
+            if stockId != 'groupId':
+                stocks.append({
+                    'stockId': stockId,
+                    'fromGroupId': request.values.get('groupId'),
+                    'toGroupId': request.values.get(stockId)
+                })
+        return render_template('main/movegrouppost.html',
+                           html=Markup(movegroupa(stocks, moveGroup)),
+                           appName="移動群組")
+    
 def movegroupmycare():
-    groupId = request.args.get('groupId', default=None)
     moveGroup = MoveGroup()
-
-    return moveGroup.MyCare(groupId)
-
+    if request.method == 'GET':
+        groupId = request.args.get('groupId', default=None)
+        return moveGroup.MyCare(groupId)
+    elif request.method == 'POST':
+        stocks = []
+        for stockId in request.values:
+            if stockId != 'groupId':
+                stocks.append({
+                    'stockId': stockId,
+                    'fromGroupId': request.values.get('groupId'),
+                    'toGroupId': request.values.get(stockId)
+                })
+        return render_template('main/movegrouppost.html',
+                           html=Markup(movegroupa(stocks, moveGroup)),
+                           appName="移動群組")
+        
 def notifyLow():
     try:
         sendLowHead()
@@ -213,19 +259,6 @@ def notifygroup():
 def png(filename):
     return send_from_directory(os.path.join(root_path, ''), f'{filename}.png')
 
-def posts():
-    try:
-        df = pd.read_csv(r'myget.csv',  header=0, index_col=0)
-    except:
-        print('謮取myget.csv失敗')
-
-    posts = ''
-    for i in range(0, len(df)):
-        posts += f'<p>{df.iloc[i].name} {df.iloc[i]["Title"]}</p>'
-        posts += df.iloc[i]['Get']
-       
-    return render_template('main/posts.html', posts=Markup(posts))
-
 def postList():
     
     posts = ''
@@ -239,11 +272,9 @@ def postList():
     except:
         print('謮取myget.csv失敗')
 
-    
-    
     for i in range(len(df)-1,-1,-1):
         
-        posts += f'<p><a href="editpost?Date={df.iloc[i].name}" target="_child">{df.iloc[i].name} {df.iloc[i]["Title"]}</a></p>'
+        posts += f'<p><a href="editpost?Date={df.iloc[i].name}" target="child">{df.iloc[i].name} {df.iloc[i]["Title"]}</a></p>'
         posts += df.iloc[i]['Get']
 
     return render_template('main/postlist.html', 
@@ -255,6 +286,14 @@ def quiz():
 
 def quiz2():
    return render_template('main/p0quiz2.html', appName='小包第2個家')
+
+def querystock():
+
+    if request.method == 'GET':
+        return render_template('main/stockinfo.html', appName='股票資訊')
+    elif request.method == 'POST':
+        return 'POST'    
+    return 'unKnown'
 
 def stocklist():
     return StockList()

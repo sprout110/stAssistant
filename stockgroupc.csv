@@ -1,5 +1,9 @@
-groupId,groupName,groupFile
-myhistory,觀察池,myhistory.csv
-mya,福氣池,mya.csv
-myb,靈氣池,myb.csv
-myc,寶玉池,myc.csv
+groupId,type,groupName,groupFile
+hard,leaf,悠閒池,hard.csv
+noteasy,leaf,銅幣池,noteasy.csv
+iron,leaf,鐵幣池,iron.csv
+none2,leaf,銀幣池,none2.csv
+myhistory,leaf,金幣池,myhistory.csv
+mya,leaf,福氣池,mya.csv
+myb,leaf,靈氣池,myb.csv
+myc,leaf,寶玉池,myc.csv

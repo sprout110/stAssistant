@@ -1,6 +1,1 @@
-groupId,groupName,groupFile
-none,不存在,none.csv
-up,上漲池,up.csv
-arrange,整理池,arrange.csv
-down,下跌池,down.csv
-candidate,研究池,candidate.csv
+groupId,type,groupName,groupFile

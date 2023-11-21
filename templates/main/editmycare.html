@@ -1,40 +1,9 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <title>{{appName}}</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
 
-    <style>
-      html {
-        font-size: 16px;
-      }
-    </style>
 
-</head>
-<body>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-myyellow border-bottom box-shadow pt-2" style="background-color:lightblue">
-
-      <a class="navbar-brand text-myorange" href="/stockgroup">
-        <div class="mb-0" style="padding-left: 10px;">
-          小幫手
-        </div>
-      </a>
-      
-      <button id="collapse" class="btn"  style="color: rgba(0,0,0,.55);border-color: rgba(0,0,0,.1);position: absolute;right: 10px;">
-        <span class="navbar-toggler-icon" style="display: inline-block;width: 1.5em;height: 1.5em;background-size: 100%;vertical-align: middle;background-position: center;"></span>
-      </button>
-    
-  </nav>
-
-  <main>
       <div id="content"  style="width:100%;padding: 20px;">
             
-            <form method="post" style="padding: 20px;">
+            <form method="post" action='/editmycare' style="padding: 20px;">
               <input type="hidden" id="stockId" name="stockId" value="{{stockId}}" />
               <input type="hidden" id="fromGroupId" name="fromGroupId" value="{{groupId}}" />
               
@@ -42,30 +11,14 @@
                 <label for="groupId"><h2>光點類別：</h2></label>
                 <div class="bd-example-snippet bd-code-snippet" style="border: 1px solid lightgray; border-radius: 6px;margin-bottom: 16px;">
                   <div class="bd-example m-0 border-0" style="padding: 24px; ">
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="toGroupId" id="groupId0" {% if groupId=='myhistory' %} checked {% endif %} value="myhistory">
-                      <label class="form-check-label" for="groupId0">
-                        觀察池
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="toGroupId" id="groupId1" {% if groupId=='mya' %} checked {% endif %} value="mya">
-                      <label class="form-check-label" for="groupId1">
-                        福氣池
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="toGroupId" id="groupId3" {% if groupId=='myb' %} checked {% endif %} value="myb">
-                      <label class="form-check-label" for="groupId3">
-                        靈氣池
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="toGroupId" id="groupId4" {% if groupId=='myc' %} checked {% endif %} value="myc">
-                      <label class="form-check-label" for="groupId4">
-                        寶玉池
-                      </label>
-                    </div>
+                    {% for group in exchangegroups %}
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="toGroupId" id="groupId-{{loop.index}}" {% if groupId==group.groupId %} checked {% endif %} value='{{group.groupId}}'>
+                        <label class="form-check-label" for="toGroupId">
+                          {{group.groupName}}
+                        </label>
+                      </div>
+                      {% endfor %}
                   </div>
                 </div>
               </div>
@@ -78,7 +31,3 @@
             
 
       </div>
-  </main>
-  
-</body>
-</html>

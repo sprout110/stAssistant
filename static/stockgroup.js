@@ -5,12 +5,42 @@ function checkonlinedata() {
       url: 'checkonlinedata',
       dataType: "html",
       success: function(data){
-        $('#stockcontent').html('<div style="text-align:left;">' + data + '</div>')
+        $('#stockcontent').html('<div style="text-align:center;">' + data + '</div>')
       },
       error: function() {
         $('#stockcontent').html('<div style="text-align:left;">檢查失敗!</div>')
       }
     })
+}
+
+function clearPng() {
+  $('#stockcontent').html('')
+  $.ajax({
+    type: "GET",
+    url: '/clearpng',
+    dataType: "html",
+    success: function(data){
+      $('#stockcontent').html('<div style="text-align:left;">' + data + '</div>')
+    },
+    error: function() {
+      $('#stockcontent').html('<div style="text-align:left;">發生問題，請檢查!</div>')
+    }
+  })
+}
+
+function queryStock() {
+  $('#stockcontent').html('')
+  $.ajax({
+    type: "GET",
+    url: '/querystock',
+    dataType: "html",
+    success: function(data){
+      $('#stockcontent').html(data)
+    },
+    error: function() {
+      $('#stockcontent').html('<div style="text-align:left;">發生問題，請檢查!</div>')
+    }
+  })
 }
 
 function showCandle(url, year) {
@@ -218,6 +248,24 @@ function notifyGroup(groupId) {
     }
 
 }
+
+function moveGroup(stockId, fromGroupId) {
+    
+  url = '/editmycare?stockId='+ stockId +'&groupId=' + fromGroupId;   
+  $.ajax({
+    type: "GET",
+    url: url,
+    dataType: "html",
+    success: function(data){
+      $('#stockcontent').html('<div style="text-align:left;">' + data + '</div>')
+    },
+    error: function() {
+      $('#stockcontent').html('<div style="text-align:left;">讀取資料失敗!</div>')
+    }
+  });
+
+}
+
 
 function showHistory(stockId) {
     

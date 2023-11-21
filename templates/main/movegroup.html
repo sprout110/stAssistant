@@ -2,59 +2,47 @@
 
 {% block content %}
   <div id="rightcontent" style="width:100%;padding: 20px;">
+
+
+
       <form method="post" style="padding: 20px;">
-        <input type="hidden" id="stockId" name="stockId" value="{{stockId}}" />
-        <input type="hidden" id="fromGroupId" name="fromGroupId" value="{{groupId}}" />
         <div class="form-group">  
-          <label for="groupId"><h2>移動群組：{{groupId}}</h2></label>
-          
+          <label for="groupId"><h2>移動群組：</h2></label>      
           {% for stock in stocks %}
           <div style="display: flex; flex-direction: row;">
 
-            <div style="width:75%; margin:5px; font-size: 1rem;padding: 10px;">
-              
-              <img src="http://127.0.0.1:5000/candle?code=2412&year=0.4" style="max-width: 100%;"/>
-            </div>
-
-            <div style="width: 25%; margin: 5px; font-size: 1rem; padding: 10px;">
-                [{{loop.index}}]{{stock['stockId']}}-{{stock['stockName']}}
-                <div class="bd-example-snippet bd-code-snippet" style="border: 1px solid lightgray; border-radius: 6px;margin-bottom: 16px;">
-                    <div class="bd-example m-0 border-0" style="padding: 24px; ">
+            <div style="width:25%; margin: 5px; font-size: 1rem; padding: 10px;">
+              [{{loop.index}}]{{stock['stockId']}}-{{stock['stockName']}}
+              <div class="bd-example-snippet bd-code-snippet" style="border: 1px solid lightgray; border-radius: 6px;margin-bottom: 16px;">
+                  <div class="bd-example m-0 border-0" style="padding: 24px; ">
+                    {% for group in exchangegroups %}
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="k{{stock.stockId}}toGroupId" id="groupId{{loop.index}}-1" {% if groupId=='up' %} checked {% endif %} value='up'>
-                      <label class="form-check-label" for="groupId1">
-                        上漲池
+                      <input class="form-check-input" type="radio" name="{{stock.stockId}}" id="groupId{{stock.stockId}}-{{loop.index}}" {% if groupId==group.groupId %} checked {% endif %} value='{{group.groupId}}'>
+                      <label class="form-check-label" for="k{{stock.stockId}}toGroupId">
+                        {{group.groupName}}
                       </label>
                     </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="k{{stock.stockId}}toGroupId" id="groupId{{loop.index}}-2" {% if groupId=='arrange' %} checked {% endif %} value='arrange'>
-                      <label class="form-check-label" for="groupId2">
-                        整理池
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="k{{stock.stockId}}toGroupId" id="groupId{{loop.index}}-3" {% if groupId=='down' %} checked {% endif %} value='down'>
-                      <label class="form-check-label" for="groupId3">
-                        下跌池
-                      </label>
-                    </div>
-                    <div class="form-check">
-                      <input class="form-check-input" type="radio" name="k{{stock.stockId}}toGroupId" id="groupId{{loop.index}}-4" {% if groupId=='candidate' %} checked {% endif %} value='candidate'>
-                      <label class="form-check-label" for="groupId4">
-                        研究池
-                      </label>
-                    </div>
+                    {% endfor %}
+                    <ul style="list-style-type: none;">
+                      <li style="display: inline-block;">高點 - <input type="text" /> + </li>
+                      <li style="display: inline-block;">低點 - <input type="text" /> + </li>
+                    </ul>
                   </div>
-                </div>
+              </div>
             </div>
-
+            
+            <div style="width:75%;margin:5px; font-size: 1rem;padding: 10px;height:550px;">      
+                <img src="candle?code={{stock.stockId}}&year=0.4" style="max-width: 100%;"/>
+            </div>
+              
           </div>
           {% endfor %}
-
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">確定</button>
         </div>
       </form>
+
+
   </div>
 {% endblock %}

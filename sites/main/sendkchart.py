@@ -10,8 +10,8 @@ def getStockAnalysis(stockId='^TWII'):
     df = df[df['stockId'] == stockId]
 
     if df.empty == False:
-        cheap = float(df.iloc[0]['cheap'])
-        expensive = float(df.iloc[0]['expensive'])
+        cheap = float(df.iloc[0]['targetPrice'])
+        expensive = float(df.iloc[0]['releasePrice'])
         stockData = StockDataModel(df.iloc[0]['stockId'])
 
         ret = ''

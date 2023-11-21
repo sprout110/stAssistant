@@ -22,4 +22,3 @@ def UpdateHistory():
     except:
         return "Internal Server Error"
     
-# UpdateHistory()

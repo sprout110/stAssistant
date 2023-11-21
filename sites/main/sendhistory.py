@@ -6,6 +6,7 @@ def sendHistory(stockId):
     df=HistoryData(stockId=stockId)
     df.columns=['日期','開盤','最高','最低','收盤','調整','成交量']
     df.set_index('日期', inplace=True)
+    df = df.sort_index(ascending=False)
     
     return f"{df.to_html(classes='table')}"
     

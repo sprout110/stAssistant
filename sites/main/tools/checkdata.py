@@ -12,9 +12,7 @@ def CheckData():
         )
 
         df = updateStockData.CheckData(stockDataModel)
-
+        
         return df
     except:
         return pd.DataFrame(columns=['Date','Open','High','Low','Close','Adj Close','Volume'])
-
-# print(checkdata())

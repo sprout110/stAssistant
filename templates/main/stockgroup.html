@@ -15,19 +15,22 @@
             <a href="javascript: showPost('/postlist')" class="link-dark rounded">觀察心得</a>
           </li>
           <li>
-            <a href="addpost" class="link-dark rounded" target="_child">新增記錄</a>
+            <a href="addpost" class="link-dark rounded" target="child">新增記錄</a>
           </li>
           <li>
-            <a href="updatestock" class="link-dark rounded" target="_child">更新單一歷史</a>
+            <a href="javascript: void(0)" class="link-dark rounded" onclick="queryStock()">股票資訊</a>
+          </li>
+          <li>
+            <a href="updatestock" class="link-dark rounded" target="child">更新單一歷史</a>
           </li>
           <li>
             <a href="javascript: void(0)" class="link-dark rounded" onclick="checkonlinedata()">檢查線上資料</a>
           </li>
           <li>
-            <a href="updateallstocks" class="link-dark rounded" target="_child">更新全部歷史</a>
+            <a href="updateallstocks" class="link-dark rounded" target="child">更新全部歷史</a>
           </li>
           <li>
-            <a href="clearpng" class="link-dark rounded" target="_child">清除png檔</a>
+            <a href="javascript: void(0)" class="link-dark rounded" onclick="clearPng()">清除png檔</a>
           </li>
         </ul>
       </div>
@@ -49,9 +52,19 @@
             <a href="javascript: updateGroup('{{group.groupId}}')" class="link-dark rounded">更新歷史</a>
           </li>
           <li>
-            <a href="notifygroup?groupId={{group.groupId}}" class="link-dark rounded" target="_child">notify</a>
+            <a href="notifygroup?groupId={{group.groupId}}" class="link-dark rounded" target="child">notify</a>
           </li>
-          {% if 'my' in group['groupId'] %}
+          {% if group['groupId'] in baseGroup %}
+          <li>
+            <a href="movegroupbase?groupId={{group['groupId']}}" class="link-dark rounded" target="child2">移至。。</a>
+          </li>
+          {% endif %}
+          {% if group['groupId'] in myGroup %}
+          <li>
+            <a href="movegroupmycare?groupId={{group['groupId']}}" class="link-dark rounded" target="child2">移至。。</a>
+          </li>
+          {% endif %}
+          {% if group['groupId'] in myGroup %}
           <li>
             <button class="btn btn-toggle collapsed" data-bs-toggle="collapse" 
               data-bs-target="#mystockitem{{loop.index}}-collapse" 
@@ -99,7 +112,7 @@
                   <a href="javascript: void(0)" class="link-dark rounded" onclick="showCandle(&quot;^TWII&quot;, 20)">最近 20年</a>
                 </li>
                 <li>
-                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showHistory(&quot;^TWII&quot;)">歷史數據</a>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="showHistory('^TWII')">歷史數據</a>
                 </li>
                 <li>
                   <a href="https://tw.stock.yahoo.com/quote/^TWII" class="link-dark rounded" target="child">
@@ -134,6 +147,9 @@
                     </li>
                     {% endfor %}                                
                   </ul>
+                </li>
+                <li>
+                  <a href="javascript: void(0)" class="link-dark rounded" onclick="moveGroup('{{stock.stockId}}', '{{group.groupId}}')">移動。。。</a>
                 </li>
                 <li>
                   <a href="javascript: void(0)" class="link-dark rounded" onclick="updateStock(&quot;{{stock['stockId']}}&quot;)">更新數據</a>
@@ -173,16 +189,6 @@
                     Yahoo
                   </a>
                 </li>
-                {% if group['groupId'] in ['up', 'arrange', 'down', 'candidate'] %}
-                <li>
-                  <a href="editbase?stockId={{stock['stockId']}}&groupId={{group['groupId']}}" class="link-dark rounded">移至。。</a>
-                </li>
-                {% endif %}
-                {% if 'my' in group['groupId'] %}
-                <li>
-                  <a href="editmycare?stockId={{stock['stockId']}}&groupId={{group['groupId']}}" class="link-dark rounded">移至。。</a>
-                </li>
-                {% endif %}
 
               </ul>
             </div>

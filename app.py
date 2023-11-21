@@ -1,15 +1,15 @@
-from flask import (Flask)
+from flask import Flask
 from flask_cors import CORS
+from flask_ckeditor import CKEditor
 import jobs.commonjobs
 from model.stockdatamodel import StockDataModel
 from model.stockgroupmodel import StockGroupModel
-from flask_ckeditor import CKEditor
 
 from actionMyimgurd import *
 
+
 app = Flask(__name__)
 app.secret_key = 'secret string'
-
 ckeditor = CKEditor(app)
 
 CORS(app)
@@ -60,7 +60,7 @@ def editbase():
             print("新增失敗")
             return "移動失敗"
 
-      return StockGroup()
+      return redirect(url_for("stockgroup"))
    
 @app.route("/editmycare", methods=['GET','POST'])
 def editmycare():
@@ -69,8 +69,9 @@ def editmycare():
 
       stockId = request.args.get('stockId', default=None)
       groupId = request.args.get('groupId', default=None)
-   
-      return render_template("main/editmycare.html", stockId=stockId, groupId=groupId)
+      stockGroup = StockGroupModel()
+      exchangegroups = stockGroup.GetSibling(groupId)
+      return render_template("main/editmycare.html", stockId=stockId, groupId=groupId, exchangegroups=exchangegroups)
    
    elif request.method == "POST":
       
@@ -92,7 +93,7 @@ def editmycare():
             print("新增失敗")
             return "移動失敗"
 
-      return StockGroup()        
+      return redirect(url_for("stockgroup"))       
 
 
 
@@ -145,8 +146,8 @@ app.add_url_rule('/getkchart', 'getkchart', getkchart, methods=['POST'])
 app.add_url_rule('/hello', 'hello', hello, methods=['POST'])
 app.add_url_rule('/historydata','historydata', historyData)
 app.add_url_rule('/index', 'index', index)
-app.add_url_rule('/movegroupbase', 'movegroupbase', movegroupbase)
-app.add_url_rule('/movegroupmycare', 'movegroupmycare', movegroupmycare)
+app.add_url_rule('/movegroupbase', 'movegroupbase', movegroupbase, methods=['GET', 'POST'])
+app.add_url_rule('/movegroupmycare', 'movegroupmycare', movegroupmycare, methods=['GET', 'POST'])
 app.add_url_rule('/notifylow', 'notifylow', notifyLow)
 app.add_url_rule('/notifymiddle', 'notifymiddle', notifyMiddle)
 app.add_url_rule('/notifyhigh', 'notifyhigh', notifyHigh)
@@ -155,13 +156,12 @@ app.add_url_rule('/notifymyb', 'notifymyb', notifyMyb)
 app.add_url_rule('/notifymyc', 'notifymyc', notifyMyc)
 app.add_url_rule('/notifygroup', 'notifygroup', notifygroup)
 app.add_url_rule('/postlist', 'postlist', postList)
-app.add_url_rule('/posts', 'posts', posts)
 app.add_url_rule('/quiz', 'quiz', quiz)
 app.add_url_rule('/quiz2', 'quiz2', quiz2)
+app.add_url_rule('/querystock', 'querystock', querystock)
 app.add_url_rule('/showlog', 'showlog', addStock)
 app.add_url_rule('/stocklist', 'stocklist', stocklist, methods=['GET', 'POST'])
 app.add_url_rule('/stockgroup', 'stockgroup', stockgroup, methods=['GET', 'POST'])
-app.add_url_rule('/test/<path:mykey>', '/test', mytest)
 app.add_url_rule('/updateallstocks','updateallstocks', updateallstocks)
 app.add_url_rule('/updatehistory', 'updatehistory', updatehistory)
 app.add_url_rule('/updategroup', 'updategroup', updategroup)
